@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'ingredient.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,13 +32,30 @@ class MyHomePage extends StatefulWidget {
 }
 
 // Current Goal:
-  // cook a pre-set recipe by following the directions
+// cook a pre-set recipe by following the directions
 
 // use Hive to store current progress in recipe
 
 class _MyHomePageState extends State<MyHomePage> {
   // logic variables, methods
-    // need to move these to their own file for Separation of Concerns
+  // need to move these to their own file for Separation of Concerns
+
+  List<Ingredient> availableIngredients = [];
+  _MyHomePageState() {
+    availableIngredients.add(new Ingredient(
+        "flour", "flour_immo_wegmann.jpg", 0));
+    availableIngredients.add(new Ingredient(
+        "yeast", "yeast_karyna_panchenko.jpg", 0));
+
+    availableIngredients.add(new Ingredient(
+        "water", "flour_immo_wegmann.jpg", 0));
+    availableIngredients.add(new Ingredient(
+        "sugar", "flour_immo_wegmann.jpg", 0));
+    availableIngredients.add(new Ingredient(
+        "salt", "flour_immo_wegmann.jpg", 0));
+    availableIngredients.add(new Ingredient(
+        "oil", "flour_immo_wegmann.jpg", 0));
+  }
 
   // six ingredients for our first recipe (bread)
   int flour = 0; // unit: cups
@@ -114,16 +132,38 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // let's build a user interface
-    // difficult to use an app without one
+  // difficult to use an app without one
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
+        appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title), // draws from one of the first widgets on this page
-      ),
+    title: Text(widget.title), // draws from one of the first widgets on this page
+    ),
 
+    body: ListView.builder(
+    itemCount: availableIngredients.length,
+    itemBuilder: (BuildContext context, int position){
+    return Card(
+    color: Colors.blueGrey[100],
+    child: ListTile(
+    title: Text(
+    availableIngredients[position].name.toString() + ": " + availableIngredients[position].count.toString(),
+    ),
+    //subtitle: Text(xkcdComics[position].personalComment),
+    leading: Image(
+    image: AssetImage(availableIngredients[position].img), height: 100,
+    width: 400, // I'd like it to be legible but it's not cooperating very well with either height or width
+    ),
+    //trailing: Icon(Icons.soup_kitchen),
+    )
+    )
+    )}
+    )
+  }
+}
+/*
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // center the UI
@@ -202,13 +242,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      /*
+       */
+/*
       floatingActionButton: FloatingActionButton(
         onPressed: addFlour,
         tooltip: 'Add Flour',
         child: const Icon(Icons.add),
       ),
        */
-    );
-  }
-}
