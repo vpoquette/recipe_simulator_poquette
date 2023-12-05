@@ -31,13 +31,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 // Current Goal:
-  // cook a pre-set recipe by following the directions
+// cook a pre-set recipe by following the directions
 
 // use Hive to store current progress in recipe
 
 class _MyHomePageState extends State<MyHomePage> {
   // logic variables, methods
-    // need to move these to their own file for Separation of Concerns
+  // need to move these to their own file for Separation of Concerns
 
   // six ingredients for our first recipe (bread)
   int flour = 0; // unit: cups
@@ -113,8 +113,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // TODO: instead of list tile, use defining_widgets_poquette
+    // still do use the ingredients list
+
   // let's build a user interface
-    // difficult to use an app without one
+  // difficult to use an app without one
   @override
   Widget build(BuildContext context) {
 
