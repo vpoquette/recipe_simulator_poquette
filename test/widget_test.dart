@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:recipe_simulator_poquette/main.dart';
+import 'package:recipe_simulator_poquette/main_broken.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
