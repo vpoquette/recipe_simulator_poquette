@@ -10,6 +10,20 @@ class HorizonsApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+      availableIngredients.add(new Ingredient(
+          "flour", "flour_immo_wegmann.jpg", 0));
+      availableIngredients.add(new Ingredient(
+          "yeast", "yeast_karyna_panchenko.jpg", 0));
+      // need imgs
+      availableIngredients.add(new Ingredient(
+          "water", "flour_immo_wegmann.jpg", 0));
+      availableIngredients.add(new Ingredient(
+          "sugar", "flour_immo_wegmann.jpg", 0));
+      availableIngredients.add(new Ingredient(
+          "salt", "flour_immo_wegmann.jpg", 0));
+      availableIngredients.add(new Ingredient(
+          "oil", "flour_immo_wegmann.jpg", 0));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
@@ -51,7 +65,8 @@ class HorizonsApp extends StatelessWidget {
                 ),
               ),
             ),
-            IngredientList(),
+            //IngredientList(),
+            IngredientListMethod(),
           ],
         ),
       ),
@@ -59,100 +74,88 @@ class HorizonsApp extends StatelessWidget {
   }
 }
 
-class IngredientList extends StatelessWidget {
-  const IngredientList({super.key});
+Widget IngredientListMethod() {
+  print("in IngredientListMethod with length = "+availableIngredients.length.toString());
+  return SliverList(
+    delegate: SliverChildBuilderDelegate(
+          (BuildContext context, int index) {
+        final Ingredient ingredient = availableIngredients[index]; // grab current ingredient
+        print(availableIngredients.length);
+        return cardWidget(ingredient);
+        //return Text("ingredient is "+ingredient.name);
+      },
+      childCount: availableIngredients.length,
+    ),
+  );
+}
 
-  @override
-  Widget build(BuildContext context) {
-    final TextTheme textTheme = Theme.of(context).textTheme;
-
-    return SliverList(
-      delegate: SliverChildBuilderDelegate(
-            (BuildContext context, int index) {
-          final Ingredient ingredient = availableIngredients[index]; // grab current ingredient
-          print(availableIngredients.length);
-          return Card(
-            child: Row(
-                children: <Widget>[
-                  // number on left of image
-                    // might not need
-                  Text(
-                    ingredient.getName(),
-                    style: textTheme.headlineMedium,
-                  ),
-                  Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start, // left align
-                            children: <Widget>[
-                              Text(
-                                ingredient.getCount().toString(),
-                                style: textTheme.headlineSmall,
-                              ),
-                              SizedBox(
-                                height: 200.0,
-                                width: 200.0,
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: <Widget>[
-                                    DecoratedBox(
-                                      position: DecorationPosition.foreground,
-                                      decoration: BoxDecoration(
-                                        gradient: RadialGradient(
-                                          colors: <Color>[
-                                            Colors.amber[500]!, //Colors.grey[800]!,
-                                            //Colors.blue,
-                                            Colors.transparent,
-                                          ],
-                                          radius: 0.25,
-                                        ),
-                                      ),
-                                      child: Image(image: AssetImage('graphics/' + ingredient.getImg()), fit: BoxFit.cover,),
-                                    ),
-                                    Center(
-                                      child: Text(
-                                        ingredient
-                                            .getName(),
-                                        style: textTheme.displayMedium,
-                                      ),
-                                    ),
+Widget cardWidget(Ingredient ingredient) {
+  return Card(
+    child: Row(
+        children: <Widget>[
+          // number on left of image
+          // might not need
+          Text(
+            ingredient.getName(),
+            //style: textTheme.headlineMedium,
+          ),
+          Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    // left align
+                    children: <Widget>[
+                      Text(
+                        ingredient.getCount().toString(),
+                        //style: textTheme.headlineSmall,
+                      ),
+                      SizedBox(
+                        height: 200.0,
+                        width: 200.0,
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            DecoratedBox(
+                              position: DecorationPosition.foreground,
+                              decoration: BoxDecoration(
+                                gradient: RadialGradient(
+                                  colors: <Color>[
+                                    Colors.amber[500]!,
+                                    //Colors.grey[800]!,
+                                    //Colors.blue,
+                                    Colors.transparent,
                                   ],
+                                  radius: 0.25,
                                 ),
                               ),
-                            ]
+                              child: Image(image: AssetImage(
+                                  'graphics/' + ingredient.getImg()),
+                                fit: BoxFit.cover,),
+                            ),
+                            Center(
+                              child: Text(
+                                ingredient
+                                    .getName(),
+                                //style: textTheme.displayMedium,
+                              ),
+                            ),
+                          ],
                         ),
-                      )
-                  ),
-                ]
-            ),
-          );
-        },
-        childCount: availableIngredients.length,
-      ),
-    );
-  }
+                      ),
+                    ]
+                ),
+              )
+          ),
+        ]
+    ),
+  );
 }
 
 // --------------------------------------------
 // Below this line are helper classes and data.
 
 List<Ingredient> availableIngredients = [];
-_MyHomePageState() {
-  availableIngredients.add(new Ingredient(
-      "flour", "flour_immo_wegmann.jpg", 0));
-  availableIngredients.add(new Ingredient(
-      "yeast", "yeast_karyna_panchenko.jpg", 0));
-  // need imgs
-  availableIngredients.add(new Ingredient(
-      "water", "flour_immo_wegmann.jpg", 0));
-  availableIngredients.add(new Ingredient(
-      "sugar", "flour_immo_wegmann.jpg", 0));
-  availableIngredients.add(new Ingredient(
-      "salt", "flour_immo_wegmann.jpg", 0));
-  availableIngredients.add(new Ingredient(
-      "oil", "flour_immo_wegmann.jpg", 0));
-}
 
 class ConstantScrollBehavior extends ScrollBehavior {
   const ConstantScrollBehavior();
