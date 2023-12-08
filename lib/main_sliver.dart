@@ -47,8 +47,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Ingredient salt = new Ingredient("salt", "flour_immo_wegmann.jpg", 0, "tsp");
   Ingredient oil = new Ingredient("oil", "flour_immo_wegmann.jpg", 0, "tbsp");
 
-    bool success = false;
-    String message = "";
+  bool success = false;
+  String message = "";
 
   increaseIngredient(ingredient) {
     setState(() { // need this to be in the home page state
@@ -56,64 +56,64 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-    @override
-    Widget build(BuildContext context) {
-      // doesn't error out here (sweats nervously)
-      availableIngredients.add(flour);
-      availableIngredients.add(yeast);
-      availableIngredients.add(water);
-      availableIngredients.add(sugar);
-      availableIngredients.add(salt);
-      availableIngredients.add(oil);
-      return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData.dark(),
-        scrollBehavior: const ConstantScrollBehavior(),
-        title: 'Recipe Simulator',
-        home: Scaffold(
-          body: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                //floating: true,
-                pinned: true,
-                stretch: true,
-                //stretchTriggerOffset: 10, // this doesn't seem to help it trigger
-                onStretchTrigger: () async { // this doesn't seem to be triggering
-                  print('Load new data!');
-                  // await Server.requestNewData();
-                },
-                backgroundColor: Colors.green[500],
-                expandedHeight: 200.0,
-                flexibleSpace: FlexibleSpaceBar(
-                  stretchModes: const [
-                    //StretchMode.zoomBackground,
-                    //StretchMode.fadeTitle,
-                    StretchMode.blurBackground,
-                  ],
-                  title: Text('Recipe Simulator'),
-                  background: DecoratedBox(
-                    position: DecorationPosition.foreground,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        begin: Alignment.bottomCenter,
-                        end: Alignment.center,
-                        colors: <Color>[
-                          Colors.red[700]!,
-                          Colors.transparent,
-                        ],
-                      ),
+  @override
+  Widget build(BuildContext context) {
+    // doesn't error out here (sweats nervously)
+    availableIngredients.add(flour);
+    availableIngredients.add(yeast);
+    availableIngredients.add(water);
+    availableIngredients.add(sugar);
+    availableIngredients.add(salt);
+    availableIngredients.add(oil);
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData.dark(),
+      scrollBehavior: const ConstantScrollBehavior(),
+      title: 'Recipe Simulator',
+      home: Scaffold(
+        body: CustomScrollView(
+          slivers: <Widget>[
+            SliverAppBar(
+              //floating: true,
+              pinned: true,
+              stretch: true,
+              //stretchTriggerOffset: 10, // this doesn't seem to help it trigger
+              onStretchTrigger: () async { // this doesn't seem to be triggering
+                print('Load new data!');
+                // await Server.requestNewData();
+              },
+              backgroundColor: Colors.green[500],
+              expandedHeight: 200.0,
+              flexibleSpace: FlexibleSpaceBar(
+                stretchModes: const [
+                  //StretchMode.zoomBackground,
+                  //StretchMode.fadeTitle,
+                  StretchMode.blurBackground,
+                ],
+                title: Text('Recipe Simulator'),
+                background: DecoratedBox(
+                  position: DecorationPosition.foreground,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      begin: Alignment.bottomCenter,
+                      end: Alignment.center,
+                      colors: <Color>[
+                        Colors.red[700]!,
+                        Colors.transparent,
+                      ],
                     ),
                   ),
                 ),
               ),
-              //IngredientList(),
-              IngredientListMethod(),
-            ],
-          ),
+            ),
+            //IngredientList(),
+            IngredientListMethod(),
+          ],
         ),
-      );
-    }
+      ),
+    );
   }
+}
 
 Widget IngredientListMethod() {
   print("in IngredientListMethod with length = "+availableIngredients.length.toString());
