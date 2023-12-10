@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/adapters.dart';
+import '/models/ingredient.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Hive.registerAdapter<Ingredient>(IngredientAdapter());
+  await Hive.initFlutter(); // added for Hive
+  await Hive.openBox<Ingredient>('ingredients');
   runApp(const MyApp());
 }
 
