@@ -44,29 +44,44 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // logic variables, methods
-  // need to move these to their own file for Separation of Concerns
 
-  // TODO: add ingredient list to this file
+  // instantiate objects
+  Ingredient flour = new Ingredient(
+      id: 1, name: "flour", img: "flour_immo_wegmann.jpg", count: 0, measurement: "cup",);
+  Ingredient yeast = new Ingredient(
+    id: 2, name: "yeast", img: "yeast_karyna_panchenko.jpg", count: 0, measurement: "tbsp",);
+  Ingredient water = new Ingredient(
+    id: 3, name: "water", img: "water_tanushree_rao.jpg", count: 0, measurement: "cup",);
+  Ingredient sugar = new Ingredient(
+    id: 4, name: "sugar", img: "sugar_faran-raufi.jpg", count: 0, measurement: "cup",);
+  Ingredient salt = new Ingredient(
+    id: 5, name: "salt", img: "salt_gidlark.jpg", count: 0, measurement: "tsp",);
+  Ingredient oil = new Ingredient(
+    id: 6, name: "oil", img: "oil_roberta-sorge.jpg", count: 0, measurement: "tbsp",);
+  // for later recipes
+  // TODO: update images
+  Ingredient egg = new Ingredient(
+    id: 7, name: "egg", img: "salt_gidlark.jpg", count: 0, measurement: "egg",); // having the measurement of "egg" might mess up grammar later
+  Ingredient milk = new Ingredient(
+    id: 8, name: "milk", img: "oil_roberta-sorge.jpg", count: 0, measurement: "cup",);
 
-  // six ingredients for our first recipe (bread)
-  int flour = 0; // unit: cups
-  int yeast = 0; // unit: tbsp
-  int water = 0; // unit: cups
-  int sugar = 0; // unit: cups
-  int salt = 0; // unit: tsp
-  int oil = 0; // unit: tbsp
-  // progress checks
+  // logic variables
   bool success = false;
   String message = "";
 
-  // for later recipes
-  int egg = 0; // unit: egg
-  int milk = 0; // unit: cups
+  increaseIngredient(ingredient) {
+    setState(() { // need this to be in the home page state
+      //ingredient.count.increase(1);
+        // this triggers a No Such Method error
+
+      ingredient.count += 1;
+    });
+  }
 
   void checkIngredients(){
     // https://tastesbetterfromscratch.com/bread-recipe/
     setState(() {
-      if (water == 2 && yeast == 1 && sugar == 1 && salt == 2 && oil == 2 && flour == 4) {
+      if (water.getCount() == 2 && yeast.getCount() == 1 && sugar.getCount() == 1 && salt.getCount() == 2 && oil.getCount() == 2 && flour.getCount() == 4) {
         success = true;
       }
       print(success);
@@ -74,42 +89,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   // TODO: add a START OVER button which resets ingredients to 0 if you mess up
-
-  void addFlour(){
-    setState(() {
-      flour ++;
-    });
-  }
-
-  void addYeast(){
-    setState(() {
-      yeast ++;
-    });
-  }
-
-  void addWater(){
-    setState(() {
-      water ++;
-    });
-  }
-
-  void addSugar(){
-    setState(() {
-      sugar ++;
-    });
-  }
-
-  void addSalt(){
-    setState(() {
-      salt ++;
-    });
-  }
-
-  void addOil(){
-    setState(() {
-      oil ++;
-    });
-  }
 
   void cook(){
     setState(() {
@@ -140,62 +119,62 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // flour
             Image(image: AssetImage('graphics/flour_immo_wegmann.jpg'), height: 100),
-            Text("Cups of Flour: $flour", style: Theme.of(context).textTheme.headlineMedium), // header
+            Text("Cups of Flour: " + flour.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium), // header
             SizedBox(height: 20), // line break
             ElevatedButton(
               onPressed: () {
-                addFlour();
+                increaseIngredient(flour);
               },
               child: Text('Add a Cup of Flour'),
             ),
             SizedBox(height: 20), // line break
             // yeast
             Image(image: AssetImage('graphics/yeast_karyna_panchenko.jpg'), height: 100),
-            Text("Tablespoons of Yeast: $yeast", style: Theme.of(context).textTheme.headlineMedium), // header
+            Text("Tablespoons of Yeast: " + yeast.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium), // header
             SizedBox(height: 20), // line break
             ElevatedButton(
               onPressed: () {
-                addYeast();
+                increaseIngredient(yeast);
               },
               child: Text('Add a Tablespoon of Yeast'),
             ),
             SizedBox(height: 20), // line break
 
             Image(image: AssetImage('graphics/water_tanushree_rao.jpg'), height: 100),
-            Text("Cups of Warm Water: $water", style: Theme.of(context).textTheme.headlineMedium),
+            Text("Cups of Warm Water: " + water.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
-                addWater();
+                increaseIngredient(water);
               },
               child: Text('Add a Cup of Warm Water'),
             ),
             SizedBox(height: 20), // line break
 
             Image(image: AssetImage('graphics/sugar_faran-raufi.jpg'), height: 100),
-            Text("Quarter-Cups of Sugar: $sugar", style: Theme.of(context).textTheme.headlineMedium),
+            Text("Quarter-Cups of Sugar: " + sugar.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
-                addSugar();
+                increaseIngredient(sugar);
               },
               child: Text('Add a Quarter-Cup of Sugar'),
             ),
             SizedBox(height: 20), // line break
 
             Image(image: AssetImage('graphics/salt_gidlark.jpg'), height: 100),
-            Text("Teaspoons of Salt: $salt", style: Theme.of(context).textTheme.headlineMedium),
+            Text("Teaspoons of Salt: " + salt.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
-                addSalt();
+                increaseIngredient(salt);
               },
               child: Text('Add a Teaspoon of Salt'),
             ),
             SizedBox(height: 20), // line break
 
             Image(image: AssetImage('graphics/oil_roberta-sorge.jpg'), height: 100),
-            Text("Tablespoons of Oil: $oil", style: Theme.of(context).textTheme.headlineMedium),
+            Text("Tablespoons of Oil: " + oil.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
-                addOil();
+                increaseIngredient(oil);
               },
               child: Text('Add a Tablespoon of Oil'),
             ),
