@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '/models/ingredient.dart';
 
 class AddIngredientDialog extends StatefulWidget {
@@ -30,7 +29,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
     if (widget.ingredient != null) {
       _nameController.text = widget.ingredient!.name;
       _imageController.text = widget.ingredient!.img;
-      _countController.text = widget.ingredient!.count;
+      _countController.text = widget.ingredient!.count as String;
       _measureController.text = widget.ingredient!.measurement;
     }
   }
@@ -86,7 +85,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
               id: int.parse(DateTime.now().toString()),
               name: _nameController.text,
               img: _imageController.text,
-              count: int.prase(_countController.text),
+              count: int.parse(_countController.text),
               measurement: _measureController.text,
             );
             if (widget.ingredient != null) {
@@ -94,7 +93,7 @@ class _AddIngredientDialogState extends State<AddIngredientDialog> {
                 id: widget.ingredient!.id,
                 name: _nameController.text,
                 img: _imageController.text,
-                count: int.prase(_countController.text),
+                count: int.parse(_countController.text),
                 measurement: _measureController.text,
               );
             }

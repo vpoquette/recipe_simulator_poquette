@@ -1,5 +1,4 @@
-part of 'package:recipe_simulator_poquette/models/ingredient.dart';
-
+part of 'ingredient.dart';
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
@@ -15,11 +14,11 @@ class IngredientAdapter extends TypeAdapter<Ingredient> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return Ingredient(
-      id: fields[1] as int?,
+      id: fields[1] as int,
       name: fields[2] as String,
       img: fields[0] as String,
       count: fields[3] as int,
-      measurement: fields[4] as String?,
+      measurement: fields[4] as String,
     );
   }
 
@@ -28,15 +27,15 @@ class IngredientAdapter extends TypeAdapter<Ingredient> {
     writer
       ..writeByte(5)
       ..writeByte(0)
-      ..write(obj.isChecked)
+      ..write(obj.name)
       ..writeByte(1)
       ..write(obj.id)
       ..writeByte(2)
-      ..write(obj.title)
+      ..write(obj.img)
       ..writeByte(3)
-      ..write(obj.description)
+      ..write(obj.count)
       ..writeByte(4)
-      ..write(obj.dateCreated);
+      ..write(obj.measurement);
   }
 
   @override
