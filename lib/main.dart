@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
 import '/models/ingredient.dart';
+import 'recipePage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -45,6 +46,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // logic variables, methods
 
+  // TODO: add list of ingredients to make UI dynamic
+
   // instantiate objects
   Ingredient flour = new Ingredient(
       id: 1, name: "flour", img: "flour_immo_wegmann.jpg", count: 0, measurement: "cup",);
@@ -59,11 +62,11 @@ class _MyHomePageState extends State<MyHomePage> {
   Ingredient oil = new Ingredient(
     id: 6, name: "oil", img: "oil_roberta-sorge.jpg", count: 0, measurement: "tbsp",);
   // for later recipes
-  // TODO: update images
+  // TODO: find and update images
   Ingredient egg = new Ingredient(
-    id: 7, name: "egg", img: "salt_gidlark.jpg", count: 0, measurement: "egg",); // having the measurement of "egg" might mess up grammar later
+    id: 7, name: "egg", img: "flour_immo_wegmann.jpg", count: 0, measurement: "egg",); // having the measurement of "egg" might mess up grammar later
   Ingredient milk = new Ingredient(
-    id: 8, name: "milk", img: "oil_roberta-sorge.jpg", count: 0, measurement: "cup",);
+    id: 8, name: "milk", img: "flour_immo_wegmann.jpg", count: 0, measurement: "cup",);
 
   // logic variables
   bool success = false;
@@ -73,7 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() { // need this to be in the home page state
       //ingredient.count.increase(1);
         // this triggers a No Such Method error
-
       ingredient.count += 1;
     });
   }
@@ -111,7 +113,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title), // draws from one of the first widgets on this page
       ),
-
+      drawer: buildDrawer(context),
       body: Center(
         child: SingleChildScrollView(
         child: Column(
@@ -203,4 +205,48 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     );
   }
+}
+
+// navigation menu; thanks Michael
+Widget buildDrawer(BuildContext context) {
+  return Drawer(
+    child: ListView(
+      padding: EdgeInsets.zero,
+      children: <Widget>[
+        const DrawerHeader(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+          ),
+          child: Text(
+            'Navigation',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+        ),
+        ListTile(
+          title: Text('Kitchen'),
+          onTap: () {
+            print('Navigating to Kitchen page');
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MyHomePage(title: 'Kitchen',)),
+            );
+          },
+        ),
+        ListTile(
+            title: Text('Recipes'),
+            onTap: () {
+              print('Navigating to recipe page');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => MyRecipePage(title: 'Recipes',)),
+              );
+            }
+        ),
+        // Add more ListTiles for additional menu items
+      ],
+    ),
+  );
 }
