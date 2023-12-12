@@ -125,27 +125,56 @@ class _MyHomePageState extends State<MyHomePage> {
       drawer: buildDrawer(context),
       body: Center(
         child: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center, // center the UI
-          children: <Widget>[
-            // TODO: create and loop through list of ingredients
-            ingredientWidget(flour, context),
-            ingredientWidget(yeast, context),
-            ingredientWidget(water, context),
-            ingredientWidget(sugar, context),
-            ingredientWidget(salt, context),
-            ingredientWidget(oil, context),
-
-            Text("$message", style: Theme.of(context).textTheme.headlineMedium),
-            ElevatedButton(
-              onPressed: () {
-                checkIngredients();
-                cook();
+        //child: Column(
+          child: ValueListenableBuilder(
+            valueListenable: Hive.box<Ingredient>('ingredients').listenable(),
+      builder: (context, box, child) {
+        //mainAxisAlignment: MainAxisAlignment.center, // center the UI
+        final ingredients = box.values;
+        return ListView.builder(
+          itemCount: ingredients.length,
+          itemBuilder: (context, index) {
+            final ingredient = ingredients.elementAt(index);
+            return IngredientListTile(
+              ingredient: ingredient,
+              onDelete: () {
+                Hive.box<Ingredient>('ingredients').delete(ingredient.id);
               },
-              child: Text('Cook'),
-            ),
-            SizedBox(height: 20), // line break
-          ],
+              onEdit: () async {
+                final newIngredient = await openAddIngredientDialog(
+                  context: context,
+                  ingredient: ingredient,
+                );
+                if (newIngredient != null) {
+                  Hive.box<Ingredient>('ingredients').put(ingredient.id, newIngredient);
+                }
+                setState(() {});
+              },
+            );
+          },
+
+          // TODO: create and loop through list of ingredients
+          ingredientWidget(flour, context),
+          ingredientWidget(yeast, context),
+          ingredientWidget(water, context),
+          ingredientWidget(sugar, context),
+          ingredientWidget(salt, context),
+          ingredientWidget(oil, context),
+
+          Text("$message", style: Theme
+              .of(context)
+              .textTheme
+              .headlineMedium),
+          ElevatedButton(
+            onPressed: () {
+              checkIngredients();
+              cook();
+            },
+            child: Text('Cook'),
+          ),
+          SizedBox(height: 20), // line break
+        );
+      }
         ),
       ),
 
