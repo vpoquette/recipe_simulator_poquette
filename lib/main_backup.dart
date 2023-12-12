@@ -43,10 +43,10 @@ class MyHomePage extends StatefulWidget {
 
 // use Hive to store current progress in recipe
 
-// TODO: add a START OVER button which resets ingredients to 0 if you mess up
-
 class _MyHomePageState extends State<MyHomePage> {
   // logic variables, methods
+
+  // TODO: add list of ingredients to make UI dynamic
 
   // instantiate objects
   Ingredient flour = new Ingredient(
@@ -74,6 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   increaseIngredient(ingredient) {
     setState(() { // need this to be in the home page state
+      //ingredient.count.increase(1);
+        // this triggers a No Such Method error
       ingredient.count += 1;
     });
   }
@@ -87,6 +89,8 @@ class _MyHomePageState extends State<MyHomePage> {
       print(success);
     });
   }
+
+  // TODO: add a START OVER button which resets ingredients to 0 if you mess up
 
   void cook(){
     setState(() {
@@ -115,13 +119,70 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // center the UI
           children: <Widget>[
-            ingredientWidget(flour, context),
-            ingredientWidget(yeast, context),
-            ingredientWidget(water, context),
-            ingredientWidget(sugar, context),
-            ingredientWidget(salt, context),
-            ingredientWidget(oil, context),
-            //Text("Recipe Success: $success", style: Theme.of(context).textTheme.headlineMedium),
+            // flour
+            Image(image: AssetImage('graphics/flour_immo_wegmann.jpg'), height: 100),
+            Text("Cups of Flour: " + flour.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium), // header
+            SizedBox(height: 20), // line break
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(flour);
+              },
+              child: Text('Add a Cup of Flour'),
+            ),
+            SizedBox(height: 20), // line break
+            // yeast
+            Image(image: AssetImage('graphics/yeast_karyna_panchenko.jpg'), height: 100),
+            Text("Tablespoons of Yeast: " + yeast.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium), // header
+            SizedBox(height: 20), // line break
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(yeast);
+              },
+              child: Text('Add a Tablespoon of Yeast'),
+            ),
+            SizedBox(height: 20), // line break
+
+            Image(image: AssetImage('graphics/water_tanushree_rao.jpg'), height: 100),
+            Text("Cups of Warm Water: " + water.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(water);
+              },
+              child: Text('Add a Cup of Warm Water'),
+            ),
+            SizedBox(height: 20), // line break
+
+            Image(image: AssetImage('graphics/sugar_faran-raufi.jpg'), height: 100),
+            Text("Quarter-Cups of Sugar: " + sugar.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(sugar);
+              },
+              child: Text('Add a Quarter-Cup of Sugar'),
+            ),
+            SizedBox(height: 20), // line break
+
+            Image(image: AssetImage('graphics/salt_gidlark.jpg'), height: 100),
+            Text("Teaspoons of Salt: " + salt.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(salt);
+              },
+              child: Text('Add a Teaspoon of Salt'),
+            ),
+            SizedBox(height: 20), // line break
+
+            Image(image: AssetImage('graphics/oil_roberta-sorge.jpg'), height: 100),
+            Text("Tablespoons of Oil: " + oil.getCount().toString(), style: Theme.of(context).textTheme.headlineMedium),
+            ElevatedButton(
+              onPressed: () {
+                increaseIngredient(oil);
+              },
+              child: Text('Add a Tablespoon of Oil'),
+            ),
+            SizedBox(height: 20), // line break
+
+            Text("Recipe Success: $success", style: Theme.of(context).textTheme.headlineMedium),
             Text("$message", style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
@@ -130,7 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
               },
               child: Text('Cook'),
             ),
-            SizedBox(height: 20), // line break
+
           ],
         ),
       ),
@@ -144,9 +205,7 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     );
   }
-
-// put
-
+}
 
 // navigation menu; thanks Michael
 Widget buildDrawer(BuildContext context) {
@@ -193,7 +252,7 @@ Widget buildDrawer(BuildContext context) {
 }
 
 Widget ingredientWidget(Ingredient ingredient, context){
-  return Column(
+  return Row(
     children: <Widget>[
     Image(image: AssetImage('graphics/' + ingredient.getImg()), height: 100),
     // can't wait for eggs of egg
@@ -201,13 +260,11 @@ Widget ingredientWidget(Ingredient ingredient, context){
     SizedBox(height: 20), // line break
     ElevatedButton(
       onPressed: () {
-        increaseIngredient(ingredient); // need set state
+        ingredient.increase(1);
       },
-
       child: Text('Add a ' + ingredient.getMeasurement() + ' of ' + ingredient.getName()),
     ),
     SizedBox(height: 20), // line break
     ]
     );
-}
 }
