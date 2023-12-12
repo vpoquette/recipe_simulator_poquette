@@ -76,7 +76,18 @@ class _MyHomePageState extends State<MyHomePage> {
   increaseIngredient(ingredient) {
     setState(() { // need this to be in the home page state
       ingredient.count += 1;
+      Hive.box<Ingredient>('ingredients').put(
+          ingredient.id,
+          Ingredient(
+            id: ingredient.id,
+            name: ingredient.name,
+            img: ingredient.img,
+            count: ingredient.count,
+            measurement: ingredient.measurement,
+          )
+      );
     });
+    //print(Hive.box<Ingredient>('ingredients').values.length);
   }
 
   void checkIngredients(){
@@ -137,6 +148,38 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
+
+      /*
+      body: ValueListenableBuilder(
+        valueListenable: Hive.box<Ingredient>('ingredients').listenable(),
+        builder: (context, box, child) {
+          final ingredients = box.values;
+          return ListView.builder(
+            itemCount: ingredients.length,
+            itemBuilder: (context, index) {
+              final ingredient = ingredients.elementAt(index);
+              return IngredientListTile(
+                ingredient: ingredient,
+                onDelete: () {
+                  Hive.box<Ingredient>('ingredients').delete(ingredient.id);
+                },
+                onEdit: () async {
+                  final newIngredient = await openAddIngredientDialog(
+                    context: context,
+                    ingredient: ingredient,
+                  );
+                  if (newIngredient != null) {
+                    Hive.box<Ingredient>('ingredients').put(ingredient.id, newIngredient);
+                  }
+                  setState(() {});
+                },
+              );
+            },
+          );
+        }
+      ),
+       */
+
       /*
       floatingActionButton: FloatingActionButton(
         onPressed: addFlour,
