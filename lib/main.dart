@@ -71,6 +71,7 @@ class _MyHomePageState extends State<MyHomePage> {
   // logic variables
   bool success = false;
   String message = "";
+  String food = "";
 
   increaseIngredient(ingredient) {
     setState(() { // need this to be in the home page state
@@ -83,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if (water.getCount() == 2 && yeast.getCount() == 1 && sugar.getCount() == 1 && salt.getCount() == 2 && oil.getCount() == 2 && flour.getCount() == 4) {
         success = true;
+        food = "bread";
       }
       print(success);
     });
@@ -91,7 +93,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void cook(){
     setState(() {
       if(success == true){
-        message = "You did it! Congratulations";
+        message = "Congratulations! You made " + food + "!";
       }
       else{
         message = "You made a mistake; better try again.";
@@ -115,13 +117,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center, // center the UI
           children: <Widget>[
+            // TODO: create and loop through list of ingredients
             ingredientWidget(flour, context),
             ingredientWidget(yeast, context),
             ingredientWidget(water, context),
             ingredientWidget(sugar, context),
             ingredientWidget(salt, context),
             ingredientWidget(oil, context),
-            //Text("Recipe Success: $success", style: Theme.of(context).textTheme.headlineMedium),
+
             Text("$message", style: Theme.of(context).textTheme.headlineMedium),
             ElevatedButton(
               onPressed: () {
@@ -144,9 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
     );
   }
-
-// put
-
 
 // navigation menu; thanks Michael
 Widget buildDrawer(BuildContext context) {
@@ -186,7 +186,6 @@ Widget buildDrawer(BuildContext context) {
               );
             }
         ),
-        // Add more ListTiles for additional menu items
       ],
     ),
   );
