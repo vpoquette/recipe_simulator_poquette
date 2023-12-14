@@ -50,12 +50,13 @@ class _MyHomePageState extends State<MyHomePage> {
   initState() {
     super.initState();
     // Add listeners to this class
-      Hive.box<Ingredient>('ingredients').put(flour.id, flour);
-      Hive.box<Ingredient>('ingredients').put(yeast.id, yeast);
-      Hive.box<Ingredient>('ingredients').put(water.id, water);
-      Hive.box<Ingredient>('ingredients').put(sugar.id, sugar);
-      Hive.box<Ingredient>('ingredients').put(salt.id, salt);
-      Hive.box<Ingredient>('ingredients').put(oil.id, oil);
+    // don't re-initialize every time we open main
+    //   Hive.box<Ingredient>('ingredients').put(flour.id, flour);
+    //   Hive.box<Ingredient>('ingredients').put(yeast.id, yeast);
+    //   Hive.box<Ingredient>('ingredients').put(water.id, water);
+    //   Hive.box<Ingredient>('ingredients').put(sugar.id, sugar);
+    //   Hive.box<Ingredient>('ingredients').put(salt.id, salt);
+    //   Hive.box<Ingredient>('ingredients').put(oil.id, oil);
   }
   // instantiate objects
   Ingredient flour = new Ingredient(
@@ -134,10 +135,6 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       drawer: buildDrawer(context),
       body: ValueListenableBuilder(
-      //body: Center(
-        //child: SingleChildScrollView(
-        //child: Column(
-          //child: ValueListenableBuilder(
             valueListenable: Hive.box<Ingredient>('ingredients').listenable(),
             builder: (context, box, child) {
               // add objects to Hive box
@@ -147,8 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
               // thanks Stack Overflow
               scrollDirection: Axis.vertical, // only generate what we can see
               shrinkWrap: true, // only generate what we can see
-                // false throws an error
-                  // "RenderBox was not laid out: RenderRepaintBoundary#dde42 relayoutBoundary=up2 NEEDS-PAINT"
               itemCount: ingredients.length,
               itemBuilder: (context, index) {
                 final ingredient = ingredients.elementAt(index);
@@ -175,73 +170,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
 
-          /*
-          // TODO: create and loop through list of ingredients
-          ingredientWidget(flour, context),
-          ingredientWidget(yeast, context),
-          ingredientWidget(water, context),
-          ingredientWidget(sugar, context),
-          ingredientWidget(salt, context),
-          ingredientWidget(oil, context),
-           */
-          /*
-          Text("$message", style: Theme
-              .of(context)
-              .textTheme
-              .headlineMedium),
-          ElevatedButton(
-            onPressed: () {
-              checkIngredients();
-              cook();
-            },
-            child: Text('Cook'),
-          ),
-          SizedBox(height: 20), // line break
-           */
         );
       }
         ),
-      //),
-
-      /*
-      body: ValueListenableBuilder(
-        valueListenable: Hive.box<Ingredient>('ingredients').listenable(),
-        builder: (context, box, child) {
-          final ingredients = box.values;
-          return ListView.builder(
-            itemCount: ingredients.length,
-            itemBuilder: (context, index) {
-              final ingredient = ingredients.elementAt(index);
-              return IngredientListTile(
-                ingredient: ingredient,
-                onDelete: () {
-                  Hive.box<Ingredient>('ingredients').delete(ingredient.id);
-                },
-                onEdit: () async {
-                  final newIngredient = await openAddIngredientDialog(
-                    context: context,
-                    ingredient: ingredient,
-                  );
-                  if (newIngredient != null) {
-                    Hive.box<Ingredient>('ingredients').put(ingredient.id, newIngredient);
-                  }
-                  setState(() {});
-                },
-              );
-            },
-          );
-        }
-      ),
-       */
-
-      /*
-      floatingActionButton: FloatingActionButton(
-        onPressed: addFlour,
-        tooltip: 'Add Flour',
-        child: const Icon(Icons.add),
-      ),
-       */
-    //),
     );
   }
 
