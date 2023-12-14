@@ -114,12 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if(success == true){
         message = "Congratulations! You made " + food + "!";
-        //kitchenFeedback(context);
+        kitchenFeedback(context);
       }
       else {
         message = "You made a mistake; better try again.";
       }
-      kitchenFeedback(context);
     });
   }
 
@@ -172,7 +171,6 @@ class _MyHomePageState extends State<MyHomePage> {
                   onCook: () {
                     checkIngredients();
                     cook();
-                    kitchenFeedback(context);
                   }
                 );
               },
@@ -247,7 +245,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-Widget kitchenFeedback(BuildContext context){
+Future kitchenFeedback(BuildContext context){
+  return showDialog(
+      context: context,
+      builder : (BuildContext context){
     return AlertDialog(
       title: const Text('Success!'),
       content: SingleChildScrollView(
@@ -257,7 +258,7 @@ Widget kitchenFeedback(BuildContext context){
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              "Wahoo!" //message
+              message
             ),
           ]
         ),
@@ -269,7 +270,8 @@ Widget kitchenFeedback(BuildContext context){
         ),
       ],
     );
-  }
+  });
+}
 
 // navigation menu; thanks Michael
 Widget buildDrawer(BuildContext context) {
