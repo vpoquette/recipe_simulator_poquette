@@ -114,12 +114,11 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       if(success == true){
         message = "Congratulations! You made " + food + "!";
-        //kitchenFeedback(context);
+        kitchenFeedback(context);
       }
       else {
         message = "You made a mistake; better try again.";
       }
-      kitchenFeedback(context);
     });
   }
 
@@ -172,7 +171,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     onCook: () {
                       checkIngredients();
                       cook();
-                      kitchenFeedback(context);
                     }
                 );
               },
@@ -247,28 +245,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  Widget kitchenFeedback(BuildContext context){
-    return AlertDialog(
-      title: const Text('Success!'),
-      content: SingleChildScrollView(
-        child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text(
-                  "Wahoo!" //message
+  Future kitchenFeedback(BuildContext context){
+    return showDialog(
+        context: context,
+        builder : (BuildContext context){
+          return AlertDialog(
+            title: const Text('Success!'),
+            content: SingleChildScrollView(
+              child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                        message
+                    ),
+                  ]
               ),
-            ]
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(null),
-          child: const Text('Ok'),
-        ),
-      ],
-    );
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(null),
+                child: const Text('Ok'),
+              ),
+            ],
+          );
+        });
   }
 
 // navigation menu; thanks Michael
