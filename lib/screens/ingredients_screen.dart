@@ -29,18 +29,13 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
               final ingredient = ingredients.elementAt(index);
               return IngredientListTile(
                 ingredient: ingredient,
-                onDelete: () {
-                  Hive.box<Ingredient>('ingredients').delete(ingredient.id);
+                onAdd: () {
+                  // just printing for now
+                  print(Hive.box<Ingredient>('ingredients').get(ingredient.count));
                 },
-                onEdit: () async {
-                  final newIngredient = await openAddIngredientDialog(
-                    context: context,
-                    ingredient: ingredient,
-                  );
-                  if (newIngredient != null) {
-                    Hive.box<Ingredient>('ingredients').put(ingredient.id, newIngredient);
-                  }
-                  setState(() {});
+                onCook: () {
+                  // just printing for now
+                  print(Hive.box<Ingredient>('ingredients').get(ingredient.count));
                 },
               );
             },

@@ -7,13 +7,13 @@ class IngredientListTile extends StatefulWidget {
   const IngredientListTile({
     super.key,
     required this.ingredient,
-    required this.onEdit,
-    required this.onDelete,
+    required this.onAdd,
+    required this.onCook,
   });
 
   final Ingredient ingredient;
-  final VoidCallback onEdit;
-  final VoidCallback onDelete;
+  final VoidCallback onAdd;
+  final VoidCallback onCook;
 
   @override
   State<IngredientListTile> createState() => _IngredientListTileState();
@@ -33,7 +33,7 @@ class _IngredientListTileState extends State<IngredientListTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.ingredient.name,
+                  widget.ingredient.name + ': ' + widget.ingredient.count.toString() + ' ' + widget.ingredient.measurement + 's',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -41,21 +41,8 @@ class _IngredientListTileState extends State<IngredientListTile> {
                     decoration: widget.ingredient.isChecked
                         ? TextDecoration.lineThrough
                         : null,
-
                      */
                   ),
-                ),
-                Text(
-                  widget.ingredient.measurement,
-                  style: TextStyle(
-                    /*
-                    decoration: widget.ingredient.isChecked
-                        ? TextDecoration.lineThrough
-                        : null,
-                        */
-                  ),
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
@@ -65,38 +52,19 @@ class _IngredientListTileState extends State<IngredientListTile> {
             child: Row(
               children: [
                 IconButton(
-                  onPressed: widget.onDelete,
+                  onPressed: widget.onAdd,
                   icon: const Icon(
-                    Icons.delete,
-                    color: Colors.red,
+                    Icons.add_circle_outline,
+                    color: Colors.blue,
                   ),
                 ),
                 IconButton(
-                  onPressed: widget.onEdit,
+                  onPressed: widget.onCook,
                   icon: const Icon(
-                    Icons.edit,
+                    Icons.local_dining,
                     color: Colors.green,
                   ),
                 ),
-                /*
-                Checkbox(
-                  //value: widget.ingredient.isChecked,
-                  onChanged: (value) {
-                    //widget.ingredient.isChecked = value!;
-                    setState(() {});
-                    Hive.box<Ingredient>('ingredients').put(
-                      widget.ingredient.id,
-                      Ingredient(
-                        id: widget.ingredient.id,
-                        name: widget.ingredient.name,
-                        img: widget.ingredient.img,
-                        count: widget.ingredient.count,
-                        measurement: widget.ingredient.measurement,
-                      ),
-                    );
-                  },
-                ),
-                */
               ],
             ),
           ),
