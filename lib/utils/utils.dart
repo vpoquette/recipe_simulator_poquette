@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '/models/ingredient.dart';
 import '/widgets/add_ingredient_dialog.dart';
 
+// generated things
+
 Future<Ingredient?> openAddIngredientDialog({
   required BuildContext context,
   Ingredient? ingredient,

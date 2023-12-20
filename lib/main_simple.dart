@@ -4,6 +4,8 @@ import 'package:hive_flutter/adapters.dart';
 import '/models/ingredient.dart';
 import 'recipePage.dart';
 
+// Backup of layout not using Hive
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Hive.registerAdapter<Ingredient>(IngredientAdapter());

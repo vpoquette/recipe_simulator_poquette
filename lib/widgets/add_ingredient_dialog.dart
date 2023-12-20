@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '/models/ingredient.dart';
 
+// Not sure this file gets used anymore since the dialog box is pretty much readonly
+
 class AddIngredientDialog extends StatefulWidget {
   const AddIngredientDialog({
     Key? key,

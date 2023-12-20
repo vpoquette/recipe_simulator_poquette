@@ -6,8 +6,11 @@ import '/widgets/ingredient_list_tile.dart';
 import '/models/ingredient.dart';
 import 'recipePage.dart';
 
+// Kitchen page
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // set up Hive
   Hive.registerAdapter<Ingredient>(IngredientAdapter());
   await Hive.initFlutter(); // added for Hive
   await Hive.openBox<Ingredient>('ingredients');
@@ -74,32 +77,28 @@ class _MyHomePageState extends State<MyHomePage> {
   String food = "";
 
   increaseIngredient(ingredient) {
-    print(ingredient.count);
+    //print(ingredient.count);
     setState(() { // need this to be in the home page state
       ingredient.count += 1;
+      // update passed-in ingredient using ingredient.id
       Hive.box<Ingredient>('ingredients').put(
           ingredient.id,
           Ingredient(
             id: ingredient.id,
             name: ingredient.name,
             img: ingredient.img,
-            count: ingredient.count,
+            count: ingredient.count, // this value is updated now
             measurement: ingredient.measurement,
           )
       );
     });
-    print(ingredient.count);
-    print(ingredient.name);
+    //print(ingredient.count);
+    //print(ingredient.name);
   }
 
+  // one recipe so far; wouldn't be too hard to add more
   void checkIngredients(){
     // https://tastesbetterfromscratch.com/bread-recipe/
-    print(flour.count);
-    print(yeast.count);
-    print(water.count);
-    print(sugar.count);
-    print(salt.count);
-    print(oil.count);
     setState(() {
       if (water.count == 2 && yeast.count == 1 && sugar.count == 1 && salt.count == 2 && oil.count == 2 && flour.count == 4) {
         success = true;
@@ -108,6 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // conditional for contents of dialog popup when cook button is pressed
   void cook(){
     setState(() {
       if(success == true){
@@ -123,6 +123,7 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  // troublesome method; see To Dos later
   void resetCount(ingredient){
     setState(() {
       //ingredient.count = 0;
@@ -143,7 +144,6 @@ class _MyHomePageState extends State<MyHomePage> {
   // difficult to use an app without one
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
@@ -166,13 +166,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 return IngredientListTile(
                     ingredient: ingredient,
                     onAdd: () {
-                      Hive.box<Ingredient>('ingredients').delete(ingredient.id);
-                      increaseIngredient(ingredient);
-                      Hive.box<Ingredient>('ingredients').put(ingredient.id, ingredient);
+                      Hive.box<Ingredient>('ingredients').delete(ingredient.id); // delete
+                      increaseIngredient(ingredient); // update
+                      Hive.box<Ingredient>('ingredients').put(ingredient.id, ingredient); // put back
                     },
                 );
               },
-
             );
           }
       ),
@@ -182,7 +181,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             heroTag: "setupButton",
             onPressed: () async {
-              if (Hive.box<Ingredient>('ingredients').length == 0) {
+              if (Hive.box<Ingredient>('ingredients').length == 0) { // if we haven't added the ingredients yet, add them to the Hive box
                 Hive.box<Ingredient>('ingredients').put(flour.id, flour);
                 Hive.box<Ingredient>('ingredients').put(yeast.id, yeast);
                 Hive.box<Ingredient>('ingredients').put(water.id, water);
@@ -205,7 +204,7 @@ class _MyHomePageState extends State<MyHomePage> {
           FloatingActionButton(
             heroTag: "cookButton",
             onPressed: () async {
-              // ingredient counts are 0 even before the method is called
+              // ingredient counts are 0 even before the method is called if reset button exists
               /*
               print(flour.count);
               print(yeast.count);
@@ -214,8 +213,8 @@ class _MyHomePageState extends State<MyHomePage> {
               print(salt.count);
               print(oil.count);
                */
-              checkIngredients();
-              cook();
+              checkIngredients(); // see if they've gotten the recipe correct
+              cook(); // display dialog accodingly
             },
             child: const Icon(Icons.local_dining, color: Colors.green),
           ),
@@ -242,7 +241,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future kitchenFeedback(BuildContext context){
-    return showDialog(
+    return showDialog( // hey there's that dialog box I keep talking about
         context: context,
         builder : (BuildContext context){
           return AlertDialog(

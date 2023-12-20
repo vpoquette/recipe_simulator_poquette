@@ -31,6 +31,7 @@ class _IngredientListTileState extends State<IngredientListTile> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  // for some reason the img filepath sometimes shows up instead of the name
                   widget.ingredient.name + ': ' + widget.ingredient.count.toString() + ' ' + widget.ingredient.measurement + 's',
                   style: TextStyle(
                     fontSize: 18,

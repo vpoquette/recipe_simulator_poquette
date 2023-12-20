@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
 
+// Recipe page
+
 void main() async {
   runApp(const MyApp());
 }
@@ -13,7 +15,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Recipe Simulator',
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -48,7 +49,7 @@ class _MyRecipePageState extends State<MyRecipePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start, // left-align the UI
             children: <Widget>[
-              // flour
+              // Recipe image, ingredients list with measurements
               SizedBox(height: 10), // padding on top
               Image(image: AssetImage('graphics/bread_charles-chen.jpg'), height: 200),
               SizedBox(height: 20), // line break
