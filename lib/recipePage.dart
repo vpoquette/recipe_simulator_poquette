@@ -55,12 +55,12 @@ class _MyRecipePageState extends State<MyRecipePage> {
               Text("Bread", style: Theme.of(context).textTheme.headlineMedium,), // header
               SizedBox(height: 10), // line break
               Text("Ingredients", style: Theme.of(context).textTheme.headlineSmall),
-              Text("2 cups warm water "
+              Text("4 cups all-purpose or bread flour"
                   "\n 1 Tablespoons active dry yeast "
+                  "\n 2 cups warm water "
                   "\n 1/4 cup honey or sugar "
                   "\n 2 teaspoons salt "
-                  "\n 2 Tablespoons oil "
-                  "\n 4 cups all-purpose or bread flour"),
+                  "\n 2 Tablespoons oil "),
               SizedBox(height: 10), // line break
 
               // TODO: add process to main.dart and uncomment text below

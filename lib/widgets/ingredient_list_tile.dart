@@ -8,12 +8,10 @@ class IngredientListTile extends StatefulWidget {
     super.key,
     required this.ingredient,
     required this.onAdd,
-    required this.onCook,
   });
 
   final Ingredient ingredient;
   final VoidCallback onAdd;
-  final VoidCallback onCook;
 
   @override
   State<IngredientListTile> createState() => _IngredientListTileState();
@@ -56,13 +54,6 @@ class _IngredientListTileState extends State<IngredientListTile> {
                   icon: const Icon(
                     Icons.add_circle_outline,
                     color: Colors.blue,
-                  ),
-                ),
-                IconButton(
-                  onPressed: widget.onCook,
-                  icon: const Icon(
-                    Icons.local_dining,
-                    color: Colors.green,
                   ),
                 ),
               ],

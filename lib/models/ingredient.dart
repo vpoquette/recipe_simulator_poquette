@@ -27,4 +27,5 @@ class Ingredient {
   String getMeasurement(){return this.measurement;}
 
   void increase(int amount){this.count += amount;}
+  void resetCount(){this.count = 0;}
 }

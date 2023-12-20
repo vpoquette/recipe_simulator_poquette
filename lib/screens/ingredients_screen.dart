@@ -33,10 +33,6 @@ class _IngredientsScreenState extends State<IngredientsScreen> {
                   // just printing for now
                   print(Hive.box<Ingredient>('ingredients').get(ingredient.count));
                 },
-                onCook: () {
-                  // just printing for now
-                  print(Hive.box<Ingredient>('ingredients').get(ingredient.count));
-                },
               );
             },
           );
